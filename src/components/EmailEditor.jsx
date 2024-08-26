@@ -122,36 +122,38 @@ const EmailEditor = ({ isOpen, onClose, inReplyTo, references, threadId }) => {
   const [error, setError] = useState("")
 
   async function replyEmail(thread_id, emailData) {
-    console.log("emailData", threadId)
+    console.log("thread_id", thread_id);
+  
     const url = `https://hiring.reachinbox.xyz/api/v1/onebox/reply/${thread_id}`;
-
+  
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(url, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(emailData),
-        mode: 'no-cors'
+        mode: 'cors'
       });
-
+  
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.text();
         throw new Error(
-          `Failed to send email: ${errorData.message || response.statusText}`
+          `Failed to send email: ${errorData || response.statusText}`
         );
       }
-
-      return await response.json(); // Parse and return the JSON response
+  
+      return await response.json();
     } catch (error) {
-        setError(error.message)
-        alert( `Failed to send email: ${error.message}` )
+      setError(error.message);
+      alert(`Failed to send email: ${error.message}`);
       console.error("Error:", error.message);
-      throw error; // Re-throw the error to handle it in the calling function
+      throw error;
     }
   }
-
+  
   const handleSubmit =async (e) => {
     setLoading(true)
     e.preventDefault();
