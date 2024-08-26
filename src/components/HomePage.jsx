@@ -85,7 +85,7 @@ function HomePage() {
   }, []);
 
   const handleGoogleLogin = () => {
-    const redirectUrl = "http://localhost:3000";
+    const redirectUrl = "https://project-reach-inbox.vercel.app/";
     const googleLoginUrl = `https://hiring.reachinbox.xyz/api/v1/auth/google-login?redirect_to=${encodeURIComponent(
       redirectUrl
     )}`;
