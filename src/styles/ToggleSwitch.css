@@ -1,0 +1,10 @@
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .toggle-knob {
+    transition: transform 0.3s;
+  }
