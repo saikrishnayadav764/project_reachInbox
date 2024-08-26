@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+import EmailEditor from "./EmailEditor";
 
 function EmailBox({
   ind,
@@ -12,9 +13,12 @@ function EmailBox({
   currThread,
   threadId,
   setEmails,
+  messageId,
+  references
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsopen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
 
@@ -113,6 +117,9 @@ function EmailBox({
     if (e.key == "d" || e.key == "D" || e.key=="Delete") {
       openModal();
     }
+    if(e.key == "r" || e.key == "R"){
+      setIsopen(true)
+    }
   };
   return (
     <>
@@ -179,6 +186,15 @@ function EmailBox({
         secondaryColor="#fffff"
         loading={loading}
         setLoading={setLoading}
+      />
+           <EmailEditor
+        isOpen={isOpen}
+        onClose={() => {
+          setIsopen(false);
+        }}
+        inReplyTo={messageId}
+        references={references}
+        threadId = {threadId}
       />
     </>
   );
